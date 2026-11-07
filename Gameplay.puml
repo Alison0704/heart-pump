@@ -1,0 +1,43 @@
+@startuml Gameplay
+skinparam activity {
+  BackgroundColor #E8F1FB
+  DiamondBackgroundColor #3d3d3d
+  DiamondFontColor white
+}
+
+start
+:Landing page;
+:Menu options;
+if (Ready to play?) then (yes)
+    :Start game;
+    :Cutscene: Display storyline;
+    repeat
+        :Tutorial page;
+        :Gameplay loads starting point;
+        :Balloon goes left and right to avoid obstacles;
+        :Balloon can collect powerups to inflate and go up faster;
+        if (Balloon collides with obstacle?) then (yes)
+            :Balloon loses health;
+            :Balloon reduces in size;
+            if(Balloon health <= 0?) then (yes)
+                :Display game over page;
+                stop
+            else (no)
+                :Player continues playing;
+            endif
+        endif
+        if (Player reaches destination?) then (yes)
+            :Display success page;
+        else (no)
+            :Player continues playing;
+        endif
+    backward:Player want to play again;
+    repeat while (Is game over?) is (yes) not (no)
+     :Player continues playing;
+        stop
+    else (no)
+        :Player can exit the game;
+        stop
+    endif
+
+@enduml

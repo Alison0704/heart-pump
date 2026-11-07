@@ -1,3 +1,25 @@
+@startuml Game Flow
 @startmindmap Global Project
-* Hello World
+* Heart pump
+** Players
+***[#LightBlue] Sona
+****_ class Sona: method: randomized conversations(override from human class)
+***[#LightBlue] Dev
+****_ class Dev: method: randomized conversations(override from human class)
+** Goal
+***[#LightBlue] Storyline
+**** Send a love letter using a balloon
+*****_ class storyline: part of story line
+***[#LightBlue] Environment
+**** Reach destination as fast as possible
+*****_ Service: Timer 
+** Action
+*** Move left and right to evade obstacles
+****_ class Balloon: method: DirectionShift
+*** Target inflating powerups to go up faster
+****_ class Balloon: method: DirectionShift
+** Environment
+** Obstacles
 @endmindmap
+
+@enduml

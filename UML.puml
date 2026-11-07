@@ -1,0 +1,112 @@
+@startuml UML
+skinparam class {
+  BackgroundColor #E8F1FB
+  BorderColor #3d3d3d
+}
+
+class Game {
+  - state: GameState
+  - player: Player
+  - level: Level
+  + start(): void
+  + update(): void
+  + checkCollisions(): void
+  + checkWinCondition(): boolean
+  + endGame(success: boolean): void
+}
+
+enum GameState {
+  MENU
+  CUTSCENE
+  TUTORIAL
+  PLAYING
+  SUCCESS
+  FAILURE
+}
+
+class Player {
+  - health: int
+  - x: float
+  - size: float
+
+  ' Affect Health
+  + loseHealth(amount: int): void
+  + isAlive(): boolean
+
+  ' Affects x locations
+  + moveLeft(): void
+  + moveRight(): void
+
+  ' Affects size
+  + inflate(amount: float): void
+}
+
+class Level {
+  - destinationHeight: float
+  - startPosition: Vector2
+  + load(): void
+  + spawnObstacles(): void
+  + spawnPowerups(): void
+  + isDestinationReached(balloon: Balloon): boolean
+}
+
+abstract class GameObject {
+  # x: float
+  # y: float
+  # width: float
+  # height: float
+  + update(): void
+  + collidesWith(other: GameObject): boolean
+}
+
+class Obstacle {
+  - damage: int
+  + onCollision(player: Player): void
+}
+
+class Powerup {
+  - inflateAmount: float
+  + onCollect(balloon: Balloon): void
+}
+
+class Vector2 {
+  + x: float
+  + y: float
+}
+
+class UIManager {
+  + showLanding(): void
+  + showMenu(): void
+  + showCutscene(): void
+  + showTutorial(): void
+  + showSuccess(): void
+  + showFailure(): void
+}
+
+abstract class Human {
+  + randomizedConversations(): void
+}
+
+class Sona extends Human {
+  + randomizedConversations(): void
+}
+
+class Dev extends Human {
+  + randomizedConversations(): void
+}
+
+Game "1" *-- "1" Level
+Game "1" --> "1" GameState
+Game "1" --> "1" UIManager
+Level "1" o-- "*" Player
+Level "1" o-- "*" Obstacle
+Level "1" o-- "*" Powerup
+Level --> Vector2
+Player --|> GameObject
+Obstacle --|> GameObject
+Powerup --|> GameObject
+Human --|> GameObject
+Human --> UIManager : affects showCutscene()
+
+
+@enduml
